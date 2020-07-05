@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,11 +26,11 @@ public class Expense {
     private Category category;
 
     @Past
-    private Date date;
+    private LocalDateTime date;
 
     // TODO modification date
     @Past
-    private Date modificationDate;
+    private LocalDateTime modificationDate;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -42,10 +43,10 @@ public class Expense {
     public Expense(BigDecimal value, Category category) {
         this.value = value;
         this.category = category;
-        this.date = Date.from(Instant.now());
+        this.date = LocalDateTime.now();
     }
 
-    public Expense(BigDecimal value, Category category, Date date) {
+    public Expense(BigDecimal value, Category category, LocalDateTime date) {
         this.value = value;
         this.category = category;
         this.date = date;
@@ -75,11 +76,11 @@ public class Expense {
         this.category = category;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -91,11 +92,11 @@ public class Expense {
         this.user = user;
     }
 
-    public Date getModificationDate() {
+    public LocalDateTime getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(Date modificationDate) {
+    public void setModificationDate(LocalDateTime modificationDate) {
         this.modificationDate = modificationDate;
     }
 

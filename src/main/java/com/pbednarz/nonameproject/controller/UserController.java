@@ -7,6 +7,7 @@ import com.pbednarz.nonameproject.repository.ExpenseRepository;
 import com.pbednarz.nonameproject.repository.UserRepository;
 import com.pbednarz.nonameproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public class UserController {
                              @RequestParam String category,
                              Model model,
                              Authentication auth) {
-        Expense expense = new Expense(new BigDecimal(value), Category.CAR, Date.from(Instant.now()));
+        Expense expense = new Expense(new BigDecimal(value), Category.CAR, LocalDateTime.now());
         userService.addExpenseToUser(auth.getName(), expense);
         model.addAttribute("expenses", expenseRepository.findAllByUsername(auth.getName()));
         return "redirect:/expenses";
