@@ -12,6 +12,6 @@ public interface ExpenseRepository  extends JpaRepository<Expense, Long> {
 
     public List<Expense> findAllByUserId(Long id);
 
-    @Query("SELECT e FROM Expense e JOIN User u ON e.id = u.id WHERE u.username = :username")
+    @Query(nativeQuery = true, value = "SELECT e.* FROM Expense e JOIN User u ON u.user_id = e.id_user WHERE u.username = :username")
     public List<Expense> findAllByUsername(String username);
 }

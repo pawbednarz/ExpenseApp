@@ -49,9 +49,7 @@ public class UserController {
 
     @GetMapping("/expenses")
     public String expenses(Model model,  Authentication auth) {
-        User user = userRepository.findByUsername(auth.getName());
-        // TODO maybe find by username (custom query)
-        List<Expense> expenses = expenseRepository.findAllByUserId(user.getId());
+        List<Expense> expenses = expenseRepository.findAllByUsername(auth.getName());
         model.addAttribute("expenses", expenses);
         return "expense";
     }

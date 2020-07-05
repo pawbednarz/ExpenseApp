@@ -1,5 +1,6 @@
 package com.pbednarz.nonameproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pbednarz.nonameproject.model.user.User;
 
 import javax.persistence.*;
@@ -20,13 +21,19 @@ public class Expense {
     @NotNull
     private BigDecimal value;
 
+    // TODO maybe make table UserCategories for custom categories for every user?
     private Category category;
 
     @Past
     private Date date;
 
+    // TODO modification date
+    @Past
+    private Date modificationDate;
+
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonIgnore
     private User user;
 
     public Expense() {
@@ -82,6 +89,14 @@ public class Expense {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     @Override
