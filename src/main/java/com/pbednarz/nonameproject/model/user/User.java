@@ -14,8 +14,6 @@ import java.util.Set;
 @Entity
 public class User {
 
-    //TODO ADD VALIDATION
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")

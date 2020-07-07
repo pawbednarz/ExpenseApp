@@ -30,17 +30,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        org.springframework.security.core.userdetails.User userDetails =
-                new org.springframework.security.core.userdetails.User(
-                    user.getUsername(), user.getPassword(), convertAuthorities(user.getUserRoles()));
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                convertAuthorities(user.getUserRoles())
+        );
     }
 
     private Set<GrantedAuthority> convertAuthorities (Set<UserRole> userRoles) {
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for (UserRole ur : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(ur.getRole()));
-        }
+        userRoles.forEach(ur -> authorities.add(new SimpleGrantedAuthority(ur.getRole())));
         return authorities;
     }
 }

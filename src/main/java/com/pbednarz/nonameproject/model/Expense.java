@@ -14,7 +14,6 @@ import java.util.Date;
 @Entity
 public class Expense {
 
-    // TODO add proper validation and maybe some more fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +27,6 @@ public class Expense {
     @Past
     private LocalDateTime date;
 
-    // TODO modification date
     @Past
     private LocalDateTime modificationDate;
 

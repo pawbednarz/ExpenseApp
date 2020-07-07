@@ -1,7 +1,5 @@
 package com.pbednarz.nonameproject.controllerRest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pbednarz.nonameproject.model.Category;
 import com.pbednarz.nonameproject.model.Expense;
 import com.pbednarz.nonameproject.repository.ExpenseRepository;
 import com.pbednarz.nonameproject.service.ExpenseService;
@@ -23,8 +21,6 @@ import java.util.Map;
 @RequestMapping("${com.pbednarz.apiPath}/expense")
 public class ExpenseControllerRest {
 
-    // TODO ADD AUTHENTICATION!!!
-
     private ExpenseRepository expenseRepository;
     private ExpenseService expenseService;
 
@@ -39,6 +35,7 @@ public class ExpenseControllerRest {
 
     @GetMapping
     public ResponseEntity<Expense> getExpenses(Authentication auth) {
+        System.out.println(auth.getName());
         List<Expense> expenses = expenseRepository.findAllByUsername(auth.getName());
         return new ResponseEntity(expenses, HttpStatus.OK);
     }
@@ -62,6 +59,7 @@ public class ExpenseControllerRest {
         if (!error.isEmpty()){
             return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
         }
+            // TODO un-hardcode that
             expenseService.addNewExpenseToUser(expense, "pablo");
             return new ResponseEntity(HttpStatus.CREATED);
     }
