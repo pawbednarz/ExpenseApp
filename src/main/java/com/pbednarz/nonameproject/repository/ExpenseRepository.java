@@ -10,8 +10,9 @@ import java.util.List;
 @Repository
 public interface ExpenseRepository  extends JpaRepository<Expense, Long> {
 
-    public List<Expense> findAllByUserId(Long id);
-
     @Query(nativeQuery = true, value = "SELECT e.* FROM Expense e JOIN User u ON u.user_id = e.id_user WHERE u.username = :username")
-    public List<Expense> findAllByUsername(String username);
+    List<Expense> findAllByUsername(String username);
+
+    @Query(nativeQuery = true, value = "SELECT e.* FROM Expense e JOIN User u On u.user_id = e.id_user WHERE e.id = :id AND u.username = :username")
+    Expense findByIdAndUsername(long id, String username);
 }

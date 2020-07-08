@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,7 @@ public class ExpenseControllerRest {
 
     @GetMapping("/{id}")
     public ResponseEntity<Expense> getExpense(@PathVariable int id) {
+        // TODO only if user have permissions for that
         Expense expense = expenseRepository.findById((long) id).orElse(null);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -54,20 +54,20 @@ public class ExpenseControllerRest {
 
     @PostMapping
     public ResponseEntity addExpense(@RequestBody @Valid Expense expense,
-                                              BindingResult bindingResult) throws URISyntaxException {
+                                     BindingResult bindingResult,
+                                     Authentication auth) {
         String error = expenseService.checkForErrors(bindingResult);
         if (!error.isEmpty()){
             return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
         }
-            // TODO un-hardcode that
-            expenseService.addNewExpenseToUser(expense, "pablo");
+            expenseService.addNewExpenseToUser(expense, auth.getName());
             return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity updateExpense(@PathVariable int id, @RequestBody @Valid Expense expense, BindingResult bindingResult) {
+        // TODO only if user have permissions for that
         String error = expenseService.checkForErrors(bindingResult);
-        System.out.println(error);
         if (!error.isEmpty()){
             return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
         }
@@ -78,7 +78,8 @@ public class ExpenseControllerRest {
     }
 
     @DeleteMapping(consumes = "application/json")
-    public ResponseEntity deleteExpenseById(@RequestBody Map<String, Object> jsonWithId) {
+    public ResponseEntity deleteExpenseById(@RequestBody Map<String, Object> jsonWithId, Authentication auth) {
+        // TODO only if user have permissions for that
         Object idObject = jsonWithId.getOrDefault("id", null);
         Long id;
         try {
@@ -88,7 +89,9 @@ public class ExpenseControllerRest {
         } catch (HttpMessageNotReadableException e) {
             return new ResponseEntity("\"error\":\"wrong json format\"", HttpStatus.BAD_REQUEST);
         }
-        expenseRepository.deleteById(id);
+
+        System.out.println(auth.getName());
+        System.out.println(expenseRepository.findByIdAndUsername(id, auth.getName()));
         return new ResponseEntity(id, HttpStatus.NO_CONTENT);
     }
 }
