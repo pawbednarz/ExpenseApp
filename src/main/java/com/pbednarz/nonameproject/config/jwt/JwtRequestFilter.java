@@ -49,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             // TODO implement error handling (logging?)
             System.out.println("Token does not start with \"Bearer\"");
         }
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
