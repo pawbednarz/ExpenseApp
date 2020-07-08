@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements ErrorChecker{
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
     private UserRepository userRepository;

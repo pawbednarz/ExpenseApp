@@ -5,16 +5,11 @@ import com.pbednarz.nonameproject.repository.ExpenseRepository;
 import com.pbednarz.nonameproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Service
-public class ExpenseService {
+public class ExpenseService implements ErrorChecker{
 
     private UserRepository userRepository;
     private ExpenseRepository expenseRepository;
@@ -42,21 +37,5 @@ public class ExpenseService {
 
     public boolean checkPermissions(long expenseId, String username) {
         return expenseRepository.findByIdAndUsername(expenseId, username) != null;
-    }
-
-    public String checkForErrors(BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            StringBuilder response = new StringBuilder("{\"error\":\"");
-            errors.forEach(err -> {
-                response.append(err.getField());
-                response.append(" ");
-                response.append(err.getDefaultMessage());
-            });
-            response.append("\"}");
-            return response.toString();
-        } else {
-            return "";
-        }
     }
 }

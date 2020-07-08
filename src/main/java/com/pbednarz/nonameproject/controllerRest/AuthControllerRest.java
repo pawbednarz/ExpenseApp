@@ -4,21 +4,23 @@ import com.pbednarz.nonameproject.config.CustomUserDetailsService;
 import com.pbednarz.nonameproject.config.jwt.JwtUtil;
 import com.pbednarz.nonameproject.model.jwt.JwtRequest;
 import com.pbednarz.nonameproject.model.jwt.JwtResponse;
+import com.pbednarz.nonameproject.model.user.User;
+import com.pbednarz.nonameproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("${com.pbednarz.apiPath}")
@@ -27,12 +29,17 @@ public class AuthControllerRest {
     private JwtUtil jwtUtil;
     private CustomUserDetailsService userDetailsService;
     private AuthenticationManager authenticationManager;
+    private UserService userService;
 
     @Autowired
-    public AuthControllerRest(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService, AuthenticationManager authenticationManager) {
+    public AuthControllerRest(JwtUtil jwtUtil,
+                              CustomUserDetailsService userDetailsService,
+                              AuthenticationManager authenticationManager,
+                              UserService userService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -41,6 +48,17 @@ public class AuthControllerRest {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String token = jwtUtil.generateToken(userDetails.getUsername());
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody @Valid User user, BindingResult bindingResult) {
+        String error = userService.checkForErrors(bindingResult);
+        if (error.isEmpty()) {
+            userService.addWithDefaultRole(user);
+            return new ResponseEntity(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        }
     }
 
     private void authenticate(String username, String password) throws Exception{

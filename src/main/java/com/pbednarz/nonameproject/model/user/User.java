@@ -1,7 +1,5 @@
 package com.pbednarz.nonameproject.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pbednarz.nonameproject.model.Expense;
 
 import javax.persistence.*;
