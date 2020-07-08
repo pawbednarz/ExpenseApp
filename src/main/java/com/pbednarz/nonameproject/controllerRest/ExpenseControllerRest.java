@@ -79,7 +79,6 @@ public class ExpenseControllerRest {
 
     @DeleteMapping(consumes = "application/json")
     public ResponseEntity deleteExpenseById(@RequestBody Map<String, Object> jsonWithId, Authentication auth) {
-        // TODO only if user have permissions for that
         Object idObject = jsonWithId.getOrDefault("id", null);
         Long id;
         try {
@@ -89,9 +88,11 @@ public class ExpenseControllerRest {
         } catch (HttpMessageNotReadableException e) {
             return new ResponseEntity("\"error\":\"wrong json format\"", HttpStatus.BAD_REQUEST);
         }
-
-        System.out.println(auth.getName());
-        System.out.println(expenseRepository.findByIdAndUsername(id, auth.getName()));
-        return new ResponseEntity(id, HttpStatus.NO_CONTENT);
+        if (expenseRepository.findByIdAndUsername(id, auth.getName()) != null) {
+            expenseRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
