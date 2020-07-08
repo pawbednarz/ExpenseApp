@@ -40,6 +40,10 @@ public class ExpenseService {
         return toEdit;
     }
 
+    public boolean checkPermissions(long expenseId, String username) {
+        return expenseRepository.findByIdAndUsername(expenseId, username) != null;
+    }
+
     public String checkForErrors(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();

@@ -20,6 +20,8 @@ import java.util.Map;
 @RequestMapping("${com.pbednarz.apiPath}/expense")
 public class ExpenseControllerRest {
 
+    // TODO do tests for PUT mapping
+
     private ExpenseRepository expenseRepository;
     private ExpenseService expenseService;
 
@@ -40,15 +42,19 @@ public class ExpenseControllerRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> getExpense(@PathVariable int id) {
+    public ResponseEntity<Expense> getExpense(@PathVariable int id, Authentication auth) {
         // TODO only if user have permissions for that
-        Expense expense = expenseRepository.findById((long) id).orElse(null);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        if (expense == null) {
-            return new ResponseEntity("{\"error\":\"expense with provided id not found\"}", headers, HttpStatus.NOT_FOUND);
+        if (expenseService.checkPermissions(id, auth.getName())) {
+            Expense expense = expenseRepository.findById((long) id).orElse(null);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json");
+            if (expense == null) {
+                return new ResponseEntity("{\"error\":\"expense with provided id not found\"}", headers, HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity(expense, headers, HttpStatus.OK);
+            }
         } else {
-            return new ResponseEntity(expense, headers, HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -65,16 +71,22 @@ public class ExpenseControllerRest {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateExpense(@PathVariable int id, @RequestBody @Valid Expense expense, BindingResult bindingResult) {
-        // TODO only if user have permissions for that
-        String error = expenseService.checkForErrors(bindingResult);
-        if (!error.isEmpty()){
-            return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    public ResponseEntity updateExpense(@PathVariable int id,
+                                        @RequestBody @Valid Expense expense,
+                                        BindingResult bindingResult,
+                                        Authentication auth) {
+        if(expenseService.checkPermissions(id, auth.getName())) {
+            String error = expenseService.checkForErrors(bindingResult);
+            if (!error.isEmpty()){
+                return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+            }
+            Expense toEdit = expenseRepository.findById((long)id).get();
+            toEdit = expenseService.modifyExpense(toEdit, expense);
+            expenseRepository.save(toEdit);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-        Expense toEdit = expenseRepository.findById((long)id).get();
-        toEdit = expenseService.modifyExpense(toEdit, expense);
-        expenseRepository.save(toEdit);
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping(consumes = "application/json")
@@ -88,10 +100,11 @@ public class ExpenseControllerRest {
         } catch (HttpMessageNotReadableException e) {
             return new ResponseEntity("\"error\":\"wrong json format\"", HttpStatus.BAD_REQUEST);
         }
-        if (expenseRepository.findByIdAndUsername(id, auth.getName()) != null) {
+        if (expenseService.checkPermissions(id, auth.getName())) {
             expenseRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
+            // TODO think about giving response code unauthorized on unauthorized request
             return ResponseEntity.badRequest().build();
         }
     }
