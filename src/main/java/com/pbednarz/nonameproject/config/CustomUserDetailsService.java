@@ -1,8 +1,8 @@
 package com.pbednarz.nonameproject.config;
 
-import com.pbednarz.nonameproject.model.user.User;
-import com.pbednarz.nonameproject.model.user.UserRole;
-import com.pbednarz.nonameproject.repository.UserRepository;
+import com.pbednarz.nonameproject.user.model.User;
+import com.pbednarz.nonameproject.user.model.UserRole;
+import com.pbednarz.nonameproject.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
