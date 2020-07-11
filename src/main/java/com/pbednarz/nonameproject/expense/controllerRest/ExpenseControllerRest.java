@@ -20,8 +20,6 @@ import java.util.Map;
 @RequestMapping("${com.pbednarz.apiPath}/expense")
 public class ExpenseControllerRest {
 
-    // TODO do tests for PUT mapping
-
     private ExpenseRepository expenseRepository;
     private ExpenseService expenseService;
 
@@ -32,25 +30,22 @@ public class ExpenseControllerRest {
         this.expenseService = expenseService;
     }
 
-    // TODO fix app behavior on ${com.pbednarz.apiPath}/expense url (without last "/")
-
     @GetMapping
-    public ResponseEntity<Expense> getExpenses(Authentication auth) {
+    public ResponseEntity getExpenses(Authentication auth) {
         List<Expense> expenses = expenseRepository.findAllByUsername(auth.getName());
         return new ResponseEntity(expenses, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> getExpense(@PathVariable int id, Authentication auth) {
-        // TODO only if user have permissions for that
+    public ResponseEntity getExpense(@PathVariable int id, Authentication auth) {
         if (expenseService.checkPermissions(id, auth.getName())) {
             Expense expense = expenseRepository.findById((long) id).orElse(null);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "application/json");
             if (expense == null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Type", "application/json");
                 return new ResponseEntity("{\"error\":\"expense with provided id not found\"}", headers, HttpStatus.NOT_FOUND);
             } else {
-                return new ResponseEntity(expense, headers, HttpStatus.OK);
+                return new ResponseEntity(expense, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity(HttpStatus.FORBIDDEN);

@@ -15,12 +15,17 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     @Size(min = 3, max = 64)
     private String name;
+
     @Column(name = "is_default_category")
     @NotNull
+    // TODO why that doesnt work?
+    @JsonIgnore
     private Boolean isDefaultCategory;
+
     @ManyToMany
     @JsonIgnore
     private List<User> users;
