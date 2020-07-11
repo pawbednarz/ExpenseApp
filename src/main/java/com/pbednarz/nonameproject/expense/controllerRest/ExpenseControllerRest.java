@@ -1,8 +1,8 @@
-package com.pbednarz.nonameproject.controllerRest;
+package com.pbednarz.nonameproject.expense.controllerRest;
 
-import com.pbednarz.nonameproject.model.Expense;
-import com.pbednarz.nonameproject.repository.ExpenseRepository;
-import com.pbednarz.nonameproject.service.ExpenseService;
+import com.pbednarz.nonameproject.expense.model.Expense;
+import com.pbednarz.nonameproject.expense.repository.ExpenseRepository;
+import com.pbednarz.nonameproject.expense.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,6 @@ public class ExpenseControllerRest {
 
     @GetMapping
     public ResponseEntity<Expense> getExpenses(Authentication auth) {
-        System.out.println(auth.getName());
         List<Expense> expenses = expenseRepository.findAllByUsername(auth.getName());
         return new ResponseEntity(expenses, HttpStatus.OK);
     }

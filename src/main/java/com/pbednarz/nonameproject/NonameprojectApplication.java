@@ -1,9 +1,8 @@
 package com.pbednarz.nonameproject;
 
-import com.pbednarz.nonameproject.model.Category;
-import com.pbednarz.nonameproject.model.Expense;
-import com.pbednarz.nonameproject.repository.ExpenseRepository;
-import com.pbednarz.nonameproject.service.ExpenseService;
+import com.pbednarz.nonameproject.expense.model.Category;
+import com.pbednarz.nonameproject.expense.model.Expense;
+import com.pbednarz.nonameproject.expense.service.ExpenseService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

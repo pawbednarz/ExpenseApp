@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.controllerRest;
+package com.pbednarz.nonameproject.expense.controllerRest;
 
 import org.springframework.web.bind.annotation.RestController;
 

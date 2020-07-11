@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.model;
+package com.pbednarz.nonameproject.expense.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pbednarz.nonameproject.model.user.User;
@@ -7,9 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Expense {

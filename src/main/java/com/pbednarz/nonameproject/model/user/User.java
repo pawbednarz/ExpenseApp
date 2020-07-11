@@ -1,6 +1,6 @@
 package com.pbednarz.nonameproject.model.user;
 
-import com.pbednarz.nonameproject.model.Expense;
+import com.pbednarz.nonameproject.expense.model.Expense;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

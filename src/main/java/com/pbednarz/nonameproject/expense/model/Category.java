@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.model;
+package com.pbednarz.nonameproject.expense.model;
 
 public enum Category {
     FOOD, ELECTRONICS, CLOTHES, PETROL, CAR;

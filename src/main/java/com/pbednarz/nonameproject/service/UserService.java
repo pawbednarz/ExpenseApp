@@ -1,6 +1,6 @@
 package com.pbednarz.nonameproject.service;
 
-import com.pbednarz.nonameproject.model.Expense;
+import com.pbednarz.nonameproject.expense.model.Expense;
 import com.pbednarz.nonameproject.model.user.User;
 import com.pbednarz.nonameproject.model.user.UserRole;
 import com.pbednarz.nonameproject.repository.UserRepository;

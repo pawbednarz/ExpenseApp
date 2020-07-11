@@ -1,6 +1,6 @@
-package com.pbednarz.nonameproject.repository;
+package com.pbednarz.nonameproject.expense.repository;
 
-import com.pbednarz.nonameproject.model.Expense;
+import com.pbednarz.nonameproject.expense.model.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
