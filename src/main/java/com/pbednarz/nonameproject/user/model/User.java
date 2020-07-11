@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.model.user;
+package com.pbednarz.nonameproject.user.model;
 
 import com.pbednarz.nonameproject.expense.model.Expense;
 

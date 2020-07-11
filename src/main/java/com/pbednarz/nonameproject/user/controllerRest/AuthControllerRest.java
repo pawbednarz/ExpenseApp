@@ -1,11 +1,11 @@
-package com.pbednarz.nonameproject.controllerRest;
+package com.pbednarz.nonameproject.user.controllerRest;
 
 import com.pbednarz.nonameproject.config.CustomUserDetailsService;
 import com.pbednarz.nonameproject.config.jwt.JwtUtil;
 import com.pbednarz.nonameproject.model.jwt.JwtRequest;
 import com.pbednarz.nonameproject.model.jwt.JwtResponse;
-import com.pbednarz.nonameproject.model.user.User;
-import com.pbednarz.nonameproject.service.UserService;
+import com.pbednarz.nonameproject.user.model.User;
+import com.pbednarz.nonameproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

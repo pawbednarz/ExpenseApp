@@ -1,8 +1,7 @@
-package com.pbednarz.nonameproject.repository;
+package com.pbednarz.nonameproject.user.repository;
 
-import com.pbednarz.nonameproject.model.user.User;
+import com.pbednarz.nonameproject.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.model.user;
+package com.pbednarz.nonameproject.user.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

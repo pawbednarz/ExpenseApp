@@ -1,10 +1,10 @@
-package com.pbednarz.nonameproject.service;
+package com.pbednarz.nonameproject.user.service;
 
 import com.pbednarz.nonameproject.expense.model.Expense;
-import com.pbednarz.nonameproject.model.user.User;
-import com.pbednarz.nonameproject.model.user.UserRole;
-import com.pbednarz.nonameproject.repository.UserRepository;
-import com.pbednarz.nonameproject.repository.UserRoleRepository;
+import com.pbednarz.nonameproject.user.model.User;
+import com.pbednarz.nonameproject.user.model.UserRole;
+import com.pbednarz.nonameproject.user.repository.UserRepository;
+import com.pbednarz.nonameproject.user.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

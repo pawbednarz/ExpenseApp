@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.service;
+package com.pbednarz.nonameproject.user.service;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
