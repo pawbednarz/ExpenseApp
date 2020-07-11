@@ -2,8 +2,8 @@ package com.pbednarz.nonameproject.expense.service;
 
 import com.pbednarz.nonameproject.expense.model.Expense;
 import com.pbednarz.nonameproject.expense.repository.ExpenseRepository;
-import com.pbednarz.nonameproject.repository.UserRepository;
-import com.pbednarz.nonameproject.service.ErrorChecker;
+import com.pbednarz.nonameproject.user.repository.UserRepository;
+import com.pbednarz.nonameproject.user.service.ErrorChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

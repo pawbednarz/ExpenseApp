@@ -1,7 +1,7 @@
 package com.pbednarz.nonameproject.expense.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pbednarz.nonameproject.model.user.User;
+import com.pbednarz.nonameproject.user.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class Expense {
     @NotNull
     private BigDecimal value;
 
-    // TODO maybe make table UserCategories for custom categories for every user?
+    @OneToOne
     private Category category;
 
     @Past

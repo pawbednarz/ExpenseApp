@@ -1,4 +1,4 @@
-package com.pbednarz.nonameproject.todolist.Repository;
+package com.pbednarz.nonameproject.todolist.repository;
 
 import com.pbednarz.nonameproject.todolist.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package com.pbednarz.nonameproject.todolist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pbednarz.nonameproject.model.user.User;
+import com.pbednarz.nonameproject.user.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -18,6 +18,9 @@ public class Task {
     @Size(min = 3, max = 1024)
     @NotBlank
     private String task;
+    @NotBlank
+    private Priority priority;
+    @Column(name = "execution_date")
     @Future
     private Date executionDate;
     @ManyToOne
@@ -25,12 +28,16 @@ public class Task {
     @JsonIgnore
     User user;
 
-
     public Task() {
     }
 
     public Task(String task, Date executionDate) {
+        this(task, Priority.NORMAL, executionDate);
+    }
+
+    public Task(String task, Priority priority, Date executionDate) {
         this.task = task;
+        this.priority = priority;
         this.executionDate = executionDate;
     }
 
