@@ -1,9 +1,9 @@
 package com.pbednarz.nonameproject.todolist.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pbednarz.nonameproject.model.user.User;
+
+import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,6 +20,11 @@ public class Task {
     private String task;
     @Future
     private Date executionDate;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    @JsonIgnore
+    User user;
+
 
     public Task() {
     }
